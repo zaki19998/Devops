@@ -19,15 +19,12 @@ import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.springframework.scheduling.annotation.Scheduled;
 
 @Service
 public class TrainServiceImpl implements ITrainService {
-	private static final Logger l = LogManager.getLogger(TrainServiceImpl.class);
 
     @Autowired
     VoyageurRepository voyageurRepository;
@@ -49,14 +46,11 @@ public class TrainServiceImpl implements ITrainService {
         int cpt = 0;
         int occ = 0;
         List<Voyage> listvoyage = (List<Voyage>) voyageRepository.findAll();
-        l.info("tailee" + listvoyage.size());
 
         for (int i = 0; i < listvoyage.size(); i++) {
-        	l.info("gare" + nomGareDepart + "value" + listvoyage.get(0).getGareDepart());
             if (listvoyage.get(i).getGareDepart() == nomGareDepart) {
                 cpt = cpt + listvoyage.get(i).getTrain().getNbPlaceLibre();
                 occ = occ + 1;
-                l.info("cpt " + cpt);
             } else {
 
             }
@@ -98,16 +92,13 @@ public class TrainServiceImpl implements ITrainService {
 
     	Optional<Voyageur> voyageur = voyageurRepository.findById(idVoyageur);
     	if(voyageur.isPresent()) {
-    		l.info("taille test");
     	        Voyageur c = voyageur.get();
     	         List<Voyage> lesvoyages = voyageRepository.RechercheVoyage(nomGareDepart, nomGareDepart, heureDepart);
-    	        l.info("taille" + lesvoyages.size());
     	        for (int i = 0; i < lesvoyages.size(); i++) {
     	            if (lesvoyages.get(i).getTrain().getNbPlaceLibre() != 0) {
     	                lesvoyages.get(i).getMesVoyageurs().add(c);
     	                lesvoyages.get(i).getTrain().setNbPlaceLibre(lesvoyages.get(i).getTrain().getNbPlaceLibre() - 1);
     	            } else
-    	            	l.info("Pas de place disponible pour " + voyageur.get().getNomVoyageur());
     	            voyageRepository.save(lesvoyages.get(i));
     	        }
     	}
@@ -116,7 +107,6 @@ public class TrainServiceImpl implements ITrainService {
     
     public void desaffecterVoyageursTrain(Ville nomGareDepart, Ville nomGareArrivee, double heureDepart) {
         List<Voyage> lesvoyages = voyageRepository.RechercheVoyage(nomGareDepart, nomGareArrivee, heureDepart);
-        l.info("taille" + lesvoyages.size());
 
         for (int i = 0; i < lesvoyages.size(); i++) {
             for (int j = 0; j < lesvoyages.get(i).getMesVoyageurs().size(); j++)
@@ -131,13 +121,10 @@ public class TrainServiceImpl implements ITrainService {
     @Scheduled(fixedRate = 2000)
     public void trainsEnGare() {
         List<Voyage> lesvoyages = (List<Voyage>) voyageRepository.findAll();
-        l.info("taille" + lesvoyages.size());
 
         Date date = new Date();
-        l.info("In Schedular After Try");
         for (int i = 0; i < lesvoyages.size(); i++) {
             if (lesvoyages.get(i).getDateArrivee().before(date)) {
-            	l.info("les trains sont " + lesvoyages.get(i).getTrain().getCodeTrain());
             }
            
         }

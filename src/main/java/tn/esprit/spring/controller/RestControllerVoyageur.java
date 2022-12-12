@@ -18,7 +18,6 @@ import tn.esprit.spring.services.IVoyageService;
 
 @RestController
 public class RestControllerVoyageur {
-	private static final Logger l = LogManager.getLogger(RestControllerVoyageur.class);
 
     @Autowired
     IVoyageService ivoyageservice;
@@ -93,7 +92,6 @@ public class RestControllerVoyageur {
     //////URL : http://localhost:8083/SpringMVC/servlet/TrainPlacesLibres/TUNIS
     @GetMapping(value = "/TrainPlacesLibres/{nomgdpt}")
     public int TrainPlacesLibres(@PathVariable("nomgdpt") Ville nomGareDepart) {
-        l.info("in controller" + nomGareDepart);
         return itrainservice.trainPlacesLibres(nomGareDepart);
     }
 
