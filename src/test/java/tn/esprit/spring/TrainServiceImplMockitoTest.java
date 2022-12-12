@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import tn.esprit.spring.entities.Train;
 import tn.esprit.spring.repository.TrainRepository;
@@ -20,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class TrainServiceImplMockitoTest {
+ class TrainServiceImplMockitoTest {
 
 @Mock
 TrainRepository tr;

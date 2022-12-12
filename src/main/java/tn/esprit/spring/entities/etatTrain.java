@@ -1,5 +1,5 @@
 package tn.esprit.spring.entities;
 
 public enum etatTrain {
-    prevu, en_gare, en_route, annule;
+    Prevu, En_gare, En_route, Annule;
 }

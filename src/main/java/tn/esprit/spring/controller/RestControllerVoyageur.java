@@ -2,6 +2,8 @@ package tn.esprit.spring.controller;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -10,14 +12,13 @@ import tn.esprit.spring.entities.Voyageur;
 import tn.esprit.spring.entities.Train;
 import tn.esprit.spring.entities.Ville;
 import tn.esprit.spring.entities.Voyage;
-import tn.esprit.spring.repository.TrainRepository;
 import tn.esprit.spring.services.IVoyageurService;
 import tn.esprit.spring.services.ITrainService;
 import tn.esprit.spring.services.IVoyageService;
 
 @RestController
 public class RestControllerVoyageur {
-
+	private static final Logger l = LogManager.getLogger(RestControllerVoyageur.class);
 
     @Autowired
     IVoyageService ivoyageservice;
@@ -51,14 +52,14 @@ public class RestControllerVoyageur {
 
 	@GetMapping("/retrieve-Train/{Train-id}")
 	@ResponseBody
-	public Train retrieveTrain(@PathVariable("Train-id") Long TrainId) {
-		return itrainservice.recupererTrainParId(TrainId);
+	public Train retrieveTrain(@PathVariable("Train-id") Long trainId) {
+		return itrainservice.recupererTrainParId(trainId);
 	}
 
 	@DeleteMapping("/remove-Train/{Train-id}")
 	@ResponseBody
-	public void removeTrain(@PathVariable("Train-id") Long TrainId) {
-		itrainservice.supprimerTrain(itrainservice.recupererTrainParId(TrainId));
+	public void removeTrain(@PathVariable("Train-id") Long trainId) {
+		itrainservice.supprimerTrain(itrainservice.recupererTrainParId(trainId));
 	}
 
 	
@@ -76,19 +77,12 @@ public class RestControllerVoyageur {
         iVoyageurservice.ajouterVoyageur(Voyageur);
     }
 
-    //http://localhost:8083/SpringMVC/servlet/affecterTrainAVoyage/{idtr}/{idvyg}
+   
     @PutMapping(value = "/affecterTrainAVoyage/{idtr}/{idvyg}")
     //1 1  2 2 3 3 4 4
     public void affecterTrainAVoyage(@PathVariable("idtr") Long idTrain, @PathVariable("idvyg") Long idVoyage) {
         ivoyageservice.affecterTrainAVoyage(idTrain, idVoyage);
     }
-
-//@PutMapping(value = "/affecterTrainAGare/{idtr}/{idgdpt}/{idgar}")
-//public void affecterTrainAGare(@PathVariable("idtr")Long idTrain, @PathVariable("idgdpt")Long idGareDepart,@PathVariable("idgar") Long idGareArrivee)
-//{
-//	igareservice.affecterTrainAGare(idTrain,idGareDepart,idGareArrivee);
-//
-//}
 
     ////http://localhost:8083/SpringMVC/servlet/affecterTrainAVoyageur/1/EZZAHRA/7.45
     @PutMapping(value = "/affecterTrainAVoyageur/{idc}/{nomgdpt}/{nomgarr}/{heuredept}")
@@ -99,18 +93,18 @@ public class RestControllerVoyageur {
     //////URL : http://localhost:8083/SpringMVC/servlet/TrainPlacesLibres/TUNIS
     @GetMapping(value = "/TrainPlacesLibres/{nomgdpt}")
     public int TrainPlacesLibres(@PathVariable("nomgdpt") Ville nomGareDepart) {
-        System.out.println("in controller" + nomGareDepart);
-        return itrainservice.TrainPlacesLibres(nomGareDepart);
+        l.info("in controller" + nomGareDepart);
+        return itrainservice.trainPlacesLibres(nomGareDepart);
     }
 
-    @RequestMapping(value = "/ListerTrainsIndirects/{nomgdpt}/{nomgarr}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/ListerTrainsIndirects/{nomgdpt}/{nomgarr}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Train> ListerTrainsIndirects(@PathVariable("nomgdpt") Ville nomGareDepart, @PathVariable("nomgarr") Ville nomGareArrivee) {
-        return itrainservice.ListerTrainsIndirects(nomGareDepart, nomGareArrivee);
+        return itrainservice.listerTrainsIndirects(nomGareDepart, nomGareArrivee);
     }
 
     @PutMapping(value = "/DesaffecterVoyageursTrain/{nomgdpt}/{heuredept}")
     public void DesaffecterVoyageursTrain(@PathVariable("nomgdpt") Ville nomGareDepart, @PathVariable("nomgarr") Ville nomGareArrivee, @PathVariable("heuredept") double heureDepart) {
-        itrainservice.DesaffecterVoyageursTrain(nomGareDepart, nomGareArrivee, heureDepart);
+        itrainservice.desaffecterVoyageursTrain(nomGareDepart, nomGareArrivee, heureDepart);
     }
     
     

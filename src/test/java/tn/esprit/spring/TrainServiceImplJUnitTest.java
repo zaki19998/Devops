@@ -20,7 +20,7 @@ public class TrainServiceImplJUnitTest {
 	ITrainService ts;
 	 
 	 @Test
-     public void testAddTrain(){
+      void testAddTrain(){
 	    List<Train> Trains = ts.recupererAll();
 	    int expected = Trains.size();
 	    Train t = new Train(1546,70);
@@ -32,7 +32,7 @@ public class TrainServiceImplJUnitTest {
      }
 	 
 	 @Test
-	    public void testUpdateTrain() {
+	     void testUpdateTrain() {
 		    Train t = new Train(1546,70);
 		 	Train savedTrain= ts.ajouterTrain(t);
 		    savedTrain.setCodeTrain(546);
@@ -48,7 +48,7 @@ public class TrainServiceImplJUnitTest {
 	    }
 
 	 @Test
-	    public void testDeleteTrain() {
+	     void testDeleteTrain() {
 		    Train t = new Train(1546,70);
 		 	Train savedTrain= ts.ajouterTrain(t);
 		 	ts.supprimerTrain(savedTrain);
