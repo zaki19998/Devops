@@ -98,7 +98,7 @@ public class TrainServiceImpl implements ITrainService {
     	            if (lesvoyages.get(i).getTrain().getNbPlaceLibre() != 0) {
     	                lesvoyages.get(i).getMesVoyageurs().add(c);
     	                lesvoyages.get(i).getTrain().setNbPlaceLibre(lesvoyages.get(i).getTrain().getNbPlaceLibre() - 1);
-    	            } else
+    	            }
     	            voyageRepository.save(lesvoyages.get(i));
     	        }
     	}
