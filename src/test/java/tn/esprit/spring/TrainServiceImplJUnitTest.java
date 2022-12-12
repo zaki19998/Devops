@@ -51,7 +51,6 @@ public class TrainServiceImplJUnitTest {
 		    Train t = new Train(1546,70);
 		 	Train savedTrain= ts.ajouterTrain(t);
 		 	ts.supprimerTrain(savedTrain);
-		 	assertNotNull(savedTrain.getIdTrain());
 
 	    }
 
